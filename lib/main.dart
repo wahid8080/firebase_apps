@@ -1,7 +1,5 @@
 
 import 'dart:io';
-
-import 'package:firebase_apps/my_widgets/login.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -151,23 +149,20 @@ class _MyHomePageState extends State<MyHomePage> {
     StorageTaskSnapshot snapshot = await uploadTask.onComplete;
 
     imageUrl = await reference.getDownloadURL();
-
-    setState(() {
-
-    });
-
   }
 
   Future<void> uploadData(String title,String name,String imageUri)
   {
 
-    print(imageUri);
+    var firebase = FirebaseDatabase().reference();
+    String keys = firebase.push().key;
 
-    var _firebaseRef = FirebaseDatabase().reference().child('chats');
-    _firebaseRef.push().set({
+    var _firebaseRef = FirebaseDatabase().reference().child('chats').child(keys);
+    _firebaseRef.set({
       "title": title,
       "name": name,
       "image" : imageUri,
+      "keys" : keys,
     });
 
 

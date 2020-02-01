@@ -16,20 +16,17 @@ class _ListItemState extends State<ListItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    DatabaseReference reference =
-        FirebaseDatabase.instance.reference().child("chats");
-    reference.once().then((DataSnapshot datasnap) {
-      var KEYS = datasnap.value.keys;
-      var data = datasnap.value;
-
-      myData.clear();
+    myData.clear();
+    var reference = FirebaseDatabase().reference().child("chats");
+    reference.once().then((DataSnapshot dataSnap) {
+      // ignore: non_constant_identifier_names
+      var KEYS = dataSnap.value.keys;
+      var data = dataSnap.value;
 
       for (var key in KEYS) {
         MyData data2 = new MyData(
             data[key]["image"], data[key]["name"], data[key]["title"]);
         myData.add(data2);
-        print(key);
       }
 
     });
@@ -41,7 +38,6 @@ class _ListItemState extends State<ListItem> {
           scrollDirection: Axis.vertical,
           itemCount: myData.length,
           itemBuilder: (context, position) {
-            print(myData[position].key);
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: Container(
