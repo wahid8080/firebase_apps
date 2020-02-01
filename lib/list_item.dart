@@ -9,6 +9,7 @@ class ListItem extends StatefulWidget {
 }
 
 class _ListItemState extends State<ListItem> {
+
   List<MyData> myData = [];
 
   @override
@@ -28,64 +29,54 @@ class _ListItemState extends State<ListItem> {
         MyData data2 = new MyData(
             data[key]["image"], data[key]["name"], data[key]["title"]);
         myData.add(data2);
+        print(key);
       }
 
-      setState(() {
-        print(myData[0].title);
-      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'List View',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Items'),
-        ),
-        body: Container(
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: myData.length,
-              itemBuilder: (context, position) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Container(
-                    width: 200.0,
-                    height: 200.0,
-                    alignment: Alignment.bottomLeft,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                        image: NetworkImage(myData[position].image),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    // where to position the child
-                    child: Container(
+    return  ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: myData.length,
+          itemBuilder: (context, position) {
+            print(myData[position].key);
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Container(
+                width: 200.0,
+                height: 200.0,
+                alignment: Alignment.bottomLeft,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  image: DecorationImage(
+                    image: NetworkImage(myData[position].image),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                // where to position the child
+                child: Container(
 
-                      alignment: Alignment.bottomLeft,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Wrap(
-                          children: <Widget>[
-                            Text("Name : "+myData[position].title,style: TextStyle(fontSize: 20,color: Colors.white),),
-                            Text("Discreption : "+myData[position].name,style: TextStyle(fontSize: 16,color: Colors.white),),
-                          ],
-                        ),
-                      ),
+                  alignment: Alignment.bottomLeft,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Wrap(
+
+                      children: <Widget>[
+                        Text("Name : "+myData[position].title,style: TextStyle(fontSize: 20,color: Colors.white),),
+                        Text("Discreption : "+myData[position].name,style: TextStyle(fontSize: 16,color: Colors.white),),
+                      ],
                     ),
                   ),
+                ),
+              ),
 
-                );
-              }),
-        ),
-      ),
-    );
+            );
+          });
   }
 }

@@ -53,12 +53,8 @@ class _LoginFromState extends State<LoginFrom> {
           color: Colors.red,
           child: Text('Click',style: TextStyle(color: Colors.white,fontSize: 20),),
             onPressed: (){
-            bool isLogin;
-            login(_email,_pass).whenComplete((){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>ListItem()));
-            });
-
-        })
+            })
 
       ],
     );
@@ -67,7 +63,7 @@ class _LoginFromState extends State<LoginFrom> {
   Future<void> login(String email,String pass) async
   {
     print("EMAIL"+email);
-    FirebaseUser user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: pass)) as FirebaseUser;
+    FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: pass);
     print('Login successfull');
   }
 }

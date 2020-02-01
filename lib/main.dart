@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'list_item.dart';
 import 'my_style/StyleList.dart';
 
 void main() => runApp(MyApp());
@@ -51,16 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(title: Text("firebaseConnectoin"),),
       body: Center(
-
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal : 32.0),
-          child: Column(
-
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              LoginFrom(),
-            ],
-          ),
+        child: new Container(
+          child: ListItem(),
         ),
       ),
       floatingActionButton: FloatingActionButton (
@@ -133,9 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   uploadData(_title, _name,imageUrl);
                   Navigator.pop(context);
 
-                  _title ="";
-                  _name="";
-                  imageUrl = null;
                 },
                 color: Color.fromRGBO(0, 179, 134, 1.0),
               ),
@@ -163,14 +153,16 @@ class _MyHomePageState extends State<MyHomePage> {
     imageUrl = await reference.getDownloadURL();
 
     setState(() {
-      print(imageUrl);
+
     });
 
   }
 
   Future<void> uploadData(String title,String name,String imageUri)
   {
+
     print(imageUri);
+
     var _firebaseRef = FirebaseDatabase().reference().child('chats');
     _firebaseRef.push().set({
       "title": title,
